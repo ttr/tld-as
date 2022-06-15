@@ -9,7 +9,7 @@ namespace ttrAchievement
 		public const string Description = "Sessiosn Achievements progress."; // Description for the Mod.  (Set as null if none)
 		public const string Author = "ttr"; // Author of the Mod.  (MUST BE SET)
 		public const string Company = null; // Company that made the Mod.  (Set as null if none)
-		public const string Version = "0.0.1"; // Version of the Mod.  (MUST BE SET)
+		public const string Version = "0.1.0"; // Version of the Mod.  (MUST BE SET)
 		public const string DownloadLink = null; // Download Link for the Mod.  (Set as null if none)
 	}
 	internal class ttrAchievement : MelonMod

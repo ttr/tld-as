@@ -21,28 +21,45 @@ namespace ttrAchievement
 
         private static void ShowAchivementMenu(Panel_PauseMenu __instance)
         {
-            if (AchievementManager.m_AchievementSaveData != null && !InterfaceManager.m_Panel_PauseMenu.IsEnabled())
+            if (!InterfaceManager.m_Panel_PauseMenu.IsEnabled())
             {
+
                 return;
             }
-            AchievementSaveData ac = AchievementManager.m_AchievementSaveData;
-            string sessionAchievement = "Current Session Achievements:";
+            AchievementManager ac = GameManager.m_AchievementManager;
+            ac.UpdateAchievements();
+//            AchievementSaveData ac = AchievementManager.m_AchievementSaveData;
+            string sessionAchievement = "Current Session Achievements:\n";
             sessionAchievement += "Days Survived: " + ac.m_NumDaysSurvived.ToString() + "\n";
             sessionAchievement += "Consecutive Nights Survived (3): " + ac.m_ConsecutiveNightsSurvived.ToString() + "\n";
             sessionAchievement += "Fully harvested deers (10): " + ac.m_FullyHarvestedDeer.ToString() + "\n";
-            sessionAchievement += "No gun used in first 50 days: " + ((ac.m_NumDaysSurvived >= 50 && !ac.m_HasFiredGun) ? ("yes") : (!ac.m_HasFiredGun ? ("not yet") : ("no"))) + "\n";
-            sessionAchievement += "No kill in first 25 days: " + ((ac.m_NumDaysSurvived >= 25 && !ac.m_HasKilledSomething) ? ("yes") : (!ac.m_HasFiredGun ? ("not yet") : ("no"))) + "\n";
-            sessionAchievement += "Region Interiors: " + "ML - " + (ac.m_LakeRegionAllInteriors ? ("yes") : ("no")) + ", CH - " + (ac.m_CoastalRegionAllInteriors ? ("yes") : ("no")) + "\n";
-            sessionAchievement += "Living of the land (25): " + AchievementManager.m_AchievementSaveData.m_NumDaysLivingOffLand.ToString() + "\n";
-            sessionAchievement += "Natural healer: " + ((ac.m_UsedRosehipTea && ac.m_UsedReishiTea && ac.m_UsedOldMansBeardDressing) ? ("yes") : ("no")) + "\n";
-            sessionAchievement += "Days with calorie store above zero (10): " + ac.m_NumDaysCalorieStoreAboveZero.ToString() + "\n";
+            sessionAchievement += "No gun used in first 50 days: " + ((ac.m_NumDaysSurvived >= 50 && !ac.m_HasFiredGun) ? ("done") : (!ac.m_HasFiredGun ? ("not yet") : ("fail"))) + "\n";
+            sessionAchievement += "No kill in first 25 days: " + ((ac.m_NumDaysSurvived >= 25 && !ac.m_HasKilledSomething) ? ("done") : (!ac.m_HasFiredGun ? ("not yet") : ("fail"))) + "\n";
+            sessionAchievement += "Region Interiors: " + "ML - " + (ac.m_LakeRegionAllInteriors ? ("done") : ("not yet")) + ", CH - " + (ac.m_CoastalRegionAllInteriors ? ("done") : ("not yet")) + "\n";
+            sessionAchievement += "Living of the land (25): " + ac.m_NumDaysLivingOffLand.ToString() + " (*)\n";
+            sessionAchievement += "Natural healer: " + ((ac.m_UsedRosehipTea && ac.m_UsedReishiTea && ac.m_UsedOldMansBeardDressing) ? ("yes") : ("not yet")) + "\n";
+            sessionAchievement += "Days with calorie store above zero (10): " + ac.m_NumDaysCalorieStoreAboveZero.ToString() + " (*)\n";
+            sessionAchievement += "Longest Burning Fire (72): " + ac.m_LongestBurningCampFire.ToString() + "\n";
+
+            sessionAchievement += "Mapped regions: ";
+            if (ac.m_MappedRegions != null)
+            {
+                foreach (string cartName in ac.m_MappedRegions.Keys)
+                {
+                    sessionAchievement += cartName + " - " + (ac.m_MappedRegions[cartName] ? ("yes") : ("no")) + ", ";
+                }
+            }
+
+            sessionAchievement += "\n";
+            sessionAchievement += "Improvised tools (1 each): ";
+            sessionAchievement += "Knives - " + ac.m_NumImprovisedKnivesCrafted.ToString();
+            sessionAchievement += ", Hatchets - " + ac.m_NumImprovisedHatchetsCrafted.ToString() + "\n";
 
             sessionAchievement += "Happy harvesrter (25 each): ";
             sessionAchievement += "Rosehip - " + ac.m_NumRosehipPlantsHarvested.ToString();
             sessionAchievement += ", Reish - " + ac.m_NumReishiPlantsHarvested.ToString();
             sessionAchievement += ", Old mans beard - " + ac.m_NumOldMansPlantsHarvested.ToString();
             sessionAchievement += ", Cattail - " + ac.m_NumCatTailPlantsHarvested.ToString() + "\n";
-
 
             sessionAchievement += "Books Read (1 each): ";
             sessionAchievement += "Archery - " + ac.m_NumArcheryBooksRead.ToString();
@@ -56,7 +73,7 @@ namespace ttrAchievement
             sessionAchievement += ", Revolver - " + ac.m_NumRevolverBooksRead.ToString();
             sessionAchievement += ", Gunsmithing - " + ac.m_NumGunsmithingBooksRead.ToString() + "\n";
 
-
+            sessionAchievement += "\n\n *) - Those statas are live stats, not longest in session.\n";
             BasicMenu basicMenu = __instance.m_BasicMenu;
             basicMenu.UpdateTitle("Session Achievements", sessionAchievement, new Vector3(0f, -145f, 0f));
             basicMenu.m_TitleHeaderLabel.fontSize = 8;

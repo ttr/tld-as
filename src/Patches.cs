@@ -31,7 +31,7 @@ namespace ttrAchievement
 //            AchievementSaveData ac = AchievementManager.m_AchievementSaveData;
             string sessionAchievement = "Current Session Achievements:\n";
             sessionAchievement += "Days Survived: " + ac.m_NumDaysSurvived.ToString() + "\n";
-            sessionAchievement += "Consecutive Nights Survived (3): " + ac.m_ConsecutiveNightsSurvived.ToString() + "\n";
+            sessionAchievement += "Consecutive Nights Survived (3): " + ac.m_ConsecutiveNightsSurvived.ToString() + "(*)\n";
             sessionAchievement += "Fully harvested deers (10): " + ac.m_FullyHarvestedDeer.ToString() + "\n";
             sessionAchievement += "No gun used in first 50 days: " + ((ac.m_NumDaysSurvived >= 50 && !ac.m_HasFiredGun) ? ("done") : (!ac.m_HasFiredGun ? ("not yet") : ("fail"))) + "\n";
             sessionAchievement += "No kill in first 25 days: " + ((ac.m_NumDaysSurvived >= 25 && !ac.m_HasKilledSomething) ? ("done") : (!ac.m_HasFiredGun ? ("not yet") : ("fail"))) + "\n";
@@ -40,6 +40,8 @@ namespace ttrAchievement
             sessionAchievement += "Natural healer: " + ((ac.m_UsedRosehipTea && ac.m_UsedReishiTea && ac.m_UsedOldMansBeardDressing) ? ("yes") : ("not yet")) + "\n";
             sessionAchievement += "Days with calorie store above zero (10): " + ac.m_NumDaysCalorieStoreAboveZero.ToString() + " (*)\n";
             sessionAchievement += "Longest Burning Fire (72): " + ac.m_LongestBurningCampFire.ToString() + "\n";
+            sessionAchievement += "Caught Big fish (above 5Kg): " + (ac.m_CaughtBigFish ? ("done") : ("not yet")) + "\n";
+
 
             sessionAchievement += "Mapped regions: ";
             if (ac.m_MappedRegions != null)
